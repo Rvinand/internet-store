@@ -4,21 +4,40 @@ import Col from "react-bootstrap/Col";
 import DeviceList from "../components/DeviceList";
 import Pages from "../components/Pages";
 import {Container, Form, Row} from "react-bootstrap";
-import {fetchDevices} from "../http/deviceAPI";
+import {fetchBrands, fetchCategories, fetchDevices} from "../http/deviceAPI";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {deviceSlice} from "../store/DeviceSlice";
+import {useParams} from "react-router-dom";
+import {IDevice} from "../Types/IDevice";
 
 const CategoryPage = () => {
     const dispatch = useAppDispatch()
     const device = useAppSelector(state => state.DeviceSlice)
-    const {setDevices, setTotalCount} = deviceSlice.actions
+    const {setDevices, setTotalCount, setBrands, setCategories} = deviceSlice.actions
+
+    const {category} = useParams()
 
     useEffect(() => {
-        fetchDevices(device.selectedCategory.id, device.selectedBrand.id, device.page, 3).then(data => {
-            dispatch(setDevices(data.rows))
-            dispatch(setTotalCount(data.count))
-        })
-    }, [device.page, device.selectedCategory, device.selectedBrand])
+        fetchBrands().then(data => dispatch(setBrands(data)))
+
+        if(device.selectedCategory !== null) {
+            fetchDevices(device.selectedCategory.id, null, device.page, 3).then(data => {
+                dispatch(setDevices(data.rows))
+                dispatch(setTotalCount(data.count))
+            })
+        } else {
+            fetchCategories().then(data =>
+            {
+                dispatch(setCategories(data))
+                const currentCategory:IDevice = data.filter((c: IDevice) => c.name === category)
+                fetchDevices(currentCategory.id, null, device.page, 3).then(data => {
+                    dispatch(setDevices(data.rows))
+                    dispatch(setTotalCount(data.count))
+                })
+            })
+
+        }
+    }, [device.page, device.selectedCategory, device.selectedBrands])
 
     return (
         <Container>

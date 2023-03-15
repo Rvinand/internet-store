@@ -24,7 +24,7 @@ const Device = sequelize.define('device',{
     img: {type: DataTypes.STRING, allowNull: false},
 });
 
-const Category = sequelize.define('type',{
+const Category = sequelize.define('category',{
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     icon: {type: DataTypes.STRING, allowNull: false}
@@ -46,7 +46,7 @@ const DeviceInfo= sequelize.define('device_info',{
     description: {type: DataTypes.STRING, allowNull: false},
 });
 
-const TypeBrand = sequelize.define('type_brand', {
+const CategoryBrand = sequelize.define('category_brand', {
     id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
 })
 
@@ -74,8 +74,8 @@ BasketDevice.belongsTo(Device);
 Device.hasMany(DeviceInfo, {as: 'info'});
 DeviceInfo.belongsTo(Device);
 
-Category.belongsToMany(Brand, {through: TypeBrand});
-Brand.belongsToMany(Category, {through: TypeBrand});
+Category.belongsToMany(Brand, {through: CategoryBrand});
+Brand.belongsToMany(Category, {through: CategoryBrand});
 
 module.exports = {
     User,
@@ -85,6 +85,6 @@ module.exports = {
     Category,
     Brand,
     Rating,
-    TypeBrand,
+    CategoryBrand,
     DeviceInfo,
 }

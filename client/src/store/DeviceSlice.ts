@@ -8,8 +8,8 @@ interface DeviceState {
     categories: IDeviceCategory[],
     brands: IBrand[],
     devices: IDevice[],
-    selectedCategory: IDeviceCategory,
-    selectedBrand: IBrand,
+    selectedCategory: IDeviceCategory | null,
+    selectedBrands: IBrand[],
 
     basketDevices: IDevice[],
     savedDevices: IDevice[],
@@ -24,8 +24,8 @@ const initialState: DeviceState = {
     devices: [],
     basketDevices: [],
     savedDevices: [],
-    selectedCategory: {id: 0, name: "", icon: ""},
-    selectedBrand: {id: 0, name: ""},
+    selectedCategory: null,
+    selectedBrands: [],
     page: 1,
     totalCount: 0,
     limit: 3
@@ -35,11 +35,11 @@ export const deviceSlice = createSlice({
     name: 'device',
     initialState,
     reducers: {
-        setTypes(state, action: PayloadAction<any>) {
+        setCategories(state, action: PayloadAction<IDeviceCategory[]>) {
             state.categories = action.payload
         },
 
-        setBrands(state, action: PayloadAction<any>) {
+        setBrands(state, action: PayloadAction<IBrand[]>) {
             state.brands = action.payload
         },
 
@@ -54,14 +54,14 @@ export const deviceSlice = createSlice({
             state.savedDevices = action.payload
         },
 
-        setSelectedCategory(state, action: PayloadAction<any>) {
+        setSelectedCategory(state, action: PayloadAction<IDeviceCategory>) {
             state.page = 1
             state.selectedCategory = action.payload
         },
 
-        setSelectedBrand(state, action: PayloadAction<any>) {
+        setSelectedBrands(state, action: PayloadAction<IBrand[]>) {
             state.page = 1
-            state.selectedBrand = action.payload
+            state.selectedBrands = action.payload
         },
 
         setPage(state, action: PayloadAction<number>) {
