@@ -4,7 +4,7 @@ export interface IDevice {
     name: string,
 
     description: string,
-    img: ImageData | null,
+    images: ImageData[] | null,
 
     rating: number,
 

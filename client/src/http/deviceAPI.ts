@@ -1,4 +1,5 @@
 import {$authHost, $host} from "./index";
+import {IDevice} from "../Types/IDevice";
 
 export const createCategory = async (category: any) => {
     const {data} = await $authHost.post('api/category', category)

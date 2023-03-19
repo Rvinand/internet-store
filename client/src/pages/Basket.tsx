@@ -1,13 +1,15 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import DeviceItem from "../components/DeviceItem";
 import {Col, Container} from "react-bootstrap";
 import {deviceSlice} from "../store/DeviceSlice";
 import {useCookies} from "react-cookie";
+import {convertToRub} from "../utils/convertToRub";
 
 const Basket = () => {
     const [cookie] = useCookies(["basketDevices"]);
     const {basketDevices} = useAppSelector(state => state.DeviceSlice)
+    const [priceSum, setPriceSum] = useState<number>(0)
     const dispatch = useAppDispatch()
     const {setBasketDevices} = deviceSlice.actions
 
@@ -17,6 +19,16 @@ const Basket = () => {
             dispatch(setBasketDevices(cookie.basketDevices))
         }
     }, [])
+
+    useEffect(() => {
+        let totalPrice = 0
+
+        basketDevices.map(d => {
+            totalPrice += d.price
+        })
+
+        setPriceSum(totalPrice)
+    }, [basketDevices])
 
     return (
         <Container className={"mt-3"}>
@@ -34,6 +46,10 @@ const Basket = () => {
                         fontSize: "1.5rem",
                         marginTop: "23rem"
                     }}>Пока что корзина пуста</div>
+            }
+            <hr/>
+            {
+                convertToRub(priceSum)
             }
         </Container>
     );

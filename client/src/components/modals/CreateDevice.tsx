@@ -17,7 +17,7 @@ const CreateDevice = ({show, onHide}: { show: boolean, onHide: () => void }) => 
     const [selectedCategory, setSelectedCategory] = useState<IDeviceCategory | null>(null)
     const [name, setName] = useState('')
     const [price, setPrice] = useState(0)
-    const [file, setFile] = useState(null)
+    const [formFiles, setFormFiles] = useState<File[]>([])
     const [info, setInfo] = useState<any>([])
 
     useEffect(() => {
@@ -28,11 +28,9 @@ const CreateDevice = ({show, onHide}: { show: boolean, onHide: () => void }) => 
     }, [])
 
     const addInfo = () => {
-
         setInfo([...info, {title: '', description: '', number: Date.now()}])
     }
     const removeInfo = (number: any) => {
-
         setInfo(info.filter((i: { number: any; }) => i.number !== number))
     }
 
@@ -41,16 +39,32 @@ const CreateDevice = ({show, onHide}: { show: boolean, onHide: () => void }) => 
         setInfo(info.map((i: { number: any; }) => i.number === number ? {...i, [key]: value} : i))
     }
 
-    const selectFile = (e: { target: { files: React.SetStateAction<null>[]; }; }) => {
-        setFile(e.target.files[0])
+    function selectFile(e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const inputFiles = (e.target as HTMLInputElement).files
+
+        if (inputFiles) {
+            const files: File[] = []
+            for (let i = 0; i < inputFiles.length; i++) {
+                files.push(inputFiles[i])
+            }
+            setFormFiles(files)
+        }
     }
 
     const addDevice = () => {
         const formData = new FormData()
         formData.append('name', name)
         formData.append('price', `${price}`)
-        // @ts-ignore
-        formData.append('img', file)
+
+        if (formFiles.length == 0) {
+            console.log("Вы не выбрали изображение")
+            return
+        }
+
+        formFiles.forEach((file) => {
+            formData.append('images', file)
+        })
+
         if (selectedBrand !== null) {
             formData.append('brandId', String(selectedBrand.id))
         } else {
@@ -72,10 +86,9 @@ const CreateDevice = ({show, onHide}: { show: boolean, onHide: () => void }) => 
         setSelectedBrand(null)
         setSelectedCategory(null)
         setPrice(0)
-        setFile(null)
+        setFormFiles([])
         setInfo([])
     }
-
 
 
     return (
@@ -133,8 +146,9 @@ const CreateDevice = ({show, onHide}: { show: boolean, onHide: () => void }) => 
                     <Form.Control
                         className="mt-3"
                         type="file"
-                        // @ts-ignore
-                        onChange={selectFile}
+                        multiple={true}
+                        accept="image/png, image/jpeg"
+                        onChange={(e) => selectFile(e)}
                     />
                     <hr/>
                     <Button

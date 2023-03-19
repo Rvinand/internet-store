@@ -21,7 +21,7 @@ const Device = sequelize.define('device',{
     name: {type: DataTypes.STRING, unique: true, allowNull: false},
     price: {type: DataTypes.INTEGER, allowNull: false},
     rating: {type: DataTypes.INTEGER, defaultValue: 0},
-    img: {type: DataTypes.STRING, allowNull: false},
+    images: {type: DataTypes.ARRAY(DataTypes.STRING), allowNull: false},
 });
 
 const Category = sequelize.define('category',{
