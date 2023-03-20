@@ -65,6 +65,8 @@ const CreateDevice = ({show, onHide}: { show: boolean, onHide: () => void }) => 
             formData.append('images', file)
         })
 
+        formData.append("imagesCount", String(formFiles.length))
+
         if (selectedBrand !== null) {
             formData.append('brandId', String(selectedBrand.id))
         } else {
@@ -85,6 +87,7 @@ const CreateDevice = ({show, onHide}: { show: boolean, onHide: () => void }) => 
 
         setSelectedBrand(null)
         setSelectedCategory(null)
+        setName('')
         setPrice(0)
         setFormFiles([])
         setInfo([])

@@ -22,14 +22,17 @@ const DevicePage = () => {
             thumbnail: 'http://localhost:5000/' + i,
         })
     })
-
-    console.log(images)
-
     const {id} = useParams()
 
     useEffect(() => {
-        fetchOneDevice(String(id)).then(data => setDevice(data))
+        fetchOneDevice(Number(id)).then(data => setDevice(data))
     }, [])
+
+    // TODO рейтинг
+    // TODO отзывы
+    // TODO сортировку по цене
+    // TODO сброс сортировок
+    // TODO сортировка по наличию в магазине
 
     return (
 

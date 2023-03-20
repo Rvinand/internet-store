@@ -1,15 +1,15 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit'
-import {RootState} from "../store/store";
+import {IUser} from "../Types/IUser";
 
 
 interface UserState {
     isAuth: boolean,
-    user: {}
+    user: IUser | null
 }
 
 const initialState: UserState = {
     isAuth: false,
-    user: {}
+    user: null
 }
 
 export const userSlice = createSlice({
@@ -19,7 +19,7 @@ export const userSlice = createSlice({
         setIsAuth(state, action: PayloadAction<boolean>) {
             state.isAuth = action.payload
         },
-        setUser(state, action: PayloadAction<any>) {
+        setUser(state, action: PayloadAction<IUser | null>) {
             state.user = action.payload
         }
     }

@@ -10,6 +10,7 @@ import {useAppDispatch} from "../store/hooks";
 import {userSlice} from "../store/UserSlice";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
+import {IUser} from "../Types/IUser";
 
 const Auth = () => {
     const dispatch = useAppDispatch()
@@ -20,7 +21,7 @@ const Auth = () => {
 
     async function submitHandle(values: {email: string, password: string}){
         try {
-            let data;
+            let data: IUser | null = null;
             if (isLogin) {
                 data = await login(values.email, values.password);
             } else {

@@ -16,8 +16,9 @@ const NavBar = () => {
     const {setUser, setIsAuth} = userSlice.actions
 
     const logOut = () => {
-        dispatch(setUser({}))
+        dispatch(setUser(null))
         dispatch(setIsAuth(false))
+        localStorage.removeItem('token')
     }
 
     return (

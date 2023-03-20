@@ -4,41 +4,75 @@ import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {deviceSlice} from "../store/DeviceSlice";
 import {Button} from "react-bootstrap";
 import {IDevice} from "../Types/IDevice";
+import {createBasketDevice, deleteBasketDevice, fetchBasketDevices} from "../http/basketAPI";
+import {fetchOneDevice} from "../http/deviceAPI";
 
 interface AddToBasketBtnProps {
     device: IDevice
 }
 
-const AddToBasketBtn:FC<AddToBasketBtnProps> = ({device}) => {
+const AddToBasketBtn: FC<AddToBasketBtnProps> = ({device}) => {
 
     const [cookie, setCookie] = useCookies(["basketDevices"]);
 
     const {basketDevices} = useAppSelector(state => state.DeviceSlice)
+    const {user} = useAppSelector(state => state.UserSlice)
     const {setBasketDevices} = deviceSlice.actions
     const dispatch = useAppDispatch()
 
 
-    const addToBasket = () => {
-        const newBasketDevices = [...basketDevices, device]
+    const addToBasket = async () => {
+        if (user) {
+            await createBasketDevice(user.id, device.id)
+            const newBasketDevices = [...basketDevices, device]
+            dispatch(setBasketDevices(newBasketDevices))
 
-        setCookie("basketDevices", newBasketDevices, {
-            path: "/"
-        });
+        } else {
+            const newBasketDevices = [...basketDevices, device]
 
-        dispatch(setBasketDevices(newBasketDevices))
+            setCookie("basketDevices", newBasketDevices, {
+                path: "/"
+            });
+
+            dispatch(setBasketDevices(newBasketDevices))
+        }
     }
-    const deleteFromBasket = () => {
-        const newBasketDevices = basketDevices.filter(d => d.name !== device.name)
+    const deleteFromBasket = async () => {
 
-        setCookie("basketDevices", newBasketDevices, {
-            path: "/"
-        });
+        if (user) {
+            await deleteBasketDevice(user.id, device.id)
+            const newBasketDevices = basketDevices.filter(d => d.name !== device.name)
 
-        dispatch(setBasketDevices(newBasketDevices))
+            dispatch(setBasketDevices(newBasketDevices))
+
+        } else {
+            const newBasketDevices = basketDevices.filter(d => d.name !== device.name)
+
+            setCookie("basketDevices", newBasketDevices, {
+                path: "/"
+            });
+
+            dispatch(setBasketDevices(newBasketDevices))
+        }
+
     }
 
     useEffect(() => {
-        if (cookie.basketDevices) {
+
+        if (user) {
+            fetchBasketDevices(user.id).then(async bd => {
+                    const newDevices: IDevice[] = []
+
+                    for (const d of bd.rows) {
+                        await fetchOneDevice(d.deviceId).then(dev => {
+                            newDevices.push(dev)
+                        })
+                    }
+
+                    dispatch(setBasketDevices(newDevices))
+                }
+            )
+        } else if (cookie.basketDevices) {
             dispatch(setBasketDevices(cookie.basketDevices))
         }
     }, [])

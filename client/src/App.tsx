@@ -6,6 +6,7 @@ import AppRouter from "./components/AppRouter";
 import {useAppDispatch} from "./store/hooks";
 import {check} from "./http/userAPI";
 import {userSlice} from "./store/UserSlice";
+import {IUser} from "./Types/IUser";
 
 function App() {
     const dispatch = useAppDispatch()
@@ -15,8 +16,8 @@ function App() {
     const {setUser, setIsAuth} = userSlice.actions
 
     useEffect(() => {
-        check().then(() => {
-            dispatch(setUser(true))
+        check().then((data: IUser) => {
+            dispatch(setUser(data))
             dispatch(setIsAuth(true))
         }).finally(() => setLoading(false))
     }, [])

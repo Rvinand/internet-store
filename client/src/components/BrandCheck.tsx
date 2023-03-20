@@ -1,10 +1,14 @@
-import React, {useState} from 'react';
+import React, {FC, useState} from 'react';
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {deviceSlice} from "../store/DeviceSlice";
 import {IBrand} from "../Types/IBrand";
 import {Form} from "react-bootstrap";
 
-const BrandCheck = () => {
+interface BrandCheckProps {
+    brand: IBrand
+}
+
+const BrandCheck: FC<BrandCheckProps> = ({brand}) => {
 
     const dispatch = useAppDispatch()
     const {setSelectedBrands} = deviceSlice.actions
@@ -22,24 +26,17 @@ const BrandCheck = () => {
         }
     }
 
-    // TODO настроить возможность выбора нескольких производителей
-
 
     return (
-        <Form.Group>
-            <Form.Label style={{fontWeight: 700, fontSize: "1.25rem"}}>Производители</Form.Label>
-            {device.brands.map((brand: IBrand) =>
-                <Form.Check
-                    key={brand.id}
-                    className="p-1"
-                    type={"checkbox"}
-                    name="group1"
-                    label={brand.name}
-                    checked={isChecked}
-                    onChange={() => checkHandle(brand)}
-                />
-            )}
-        </Form.Group>
+        <Form.Check
+            key={brand.id}
+            className="p-1"
+            type={"checkbox"}
+            name="brand"
+            label={brand.name}
+            checked={isChecked}
+            onChange={() => checkHandle(brand)}
+        />
     );
 };
 

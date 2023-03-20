@@ -9,6 +9,7 @@ import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {deviceSlice} from "../store/DeviceSlice";
 import {useParams} from "react-router-dom";
 import {IDevice} from "../Types/IDevice";
+import {IBrand} from "../Types/IBrand";
 
 const CategoryPage = () => {
     const dispatch = useAppDispatch()
@@ -20,8 +21,15 @@ const CategoryPage = () => {
     useEffect(() => {
         fetchBrands().then(data => dispatch(setBrands(data)))
 
+        let selectedBrandsIds: number[] | null = [];
+        if (device.selectedBrands){
+            selectedBrandsIds = device.selectedBrands.map(brand => brand.id)
+        } else {
+            selectedBrandsIds = null
+        }
+
         if(device.selectedCategory !== null) {
-            fetchDevices(device.selectedCategory.id, null, device.page, 3).then(data => {
+            fetchDevices(device.selectedCategory.id, selectedBrandsIds, device.page, 3).then(data => {
                 dispatch(setDevices(data.rows))
                 dispatch(setTotalCount(data.count))
             })
@@ -30,7 +38,7 @@ const CategoryPage = () => {
             {
                 dispatch(setCategories(data))
                 const currentCategory:IDevice = data.filter((c: IDevice) => c.name === category)
-                fetchDevices(currentCategory.id, null, device.page, 3).then(data => {
+                fetchDevices(currentCategory.id, selectedBrandsIds, device.page, 3).then(data => {
                     dispatch(setDevices(data.rows))
                     dispatch(setTotalCount(data.count))
                 })
@@ -44,7 +52,12 @@ const CategoryPage = () => {
             <Row>
                 <Col md={3}>
                     <Form className={"p-3"}>
-                        <BrandCheck/>
+                        <Form.Group>
+                            <Form.Label style={{fontWeight: 700, fontSize: "1.25rem"}}>Производители</Form.Label>
+                            {device.brands.map((brand: IBrand, i: number) =>
+                                <BrandCheck key={i} brand={brand}/>
+                            )}
+                        </Form.Group>
                     </Form>
                 </Col>
                 <Col md={8}>

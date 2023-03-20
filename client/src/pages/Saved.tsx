@@ -19,6 +19,8 @@ const Saved = () => {
         }
     }, [])
 
+    // TODO сохранение сохранённых девайсов пользователя если он auth
+
     return (
         <Container className={"mt-3"}>
             {
