@@ -22,15 +22,12 @@ function App() {
         }).finally(() => setLoading(false))
     }, [])
 
-    if (loading) {
-        return <Spinner animation={"grow"}/>
-    }
-
 
     return (
       <BrowserRouter>
           <NavBar />
-          <AppRouter />
+          {loading && <Spinner animation={"grow"}/>}
+            <AppRouter />
       </BrowserRouter>
   );
 }

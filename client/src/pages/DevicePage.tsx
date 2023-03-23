@@ -5,7 +5,6 @@ import {fetchOneDevice} from "../http/deviceAPI";
 import {IDevice} from "../Types/IDevice";
 import AddToBasketBtn from "../components/AddToBasketBtn";
 import AddToSavedBtn from "../components/AddToSavedBtn";
-import Rating from "../components/Rating";
 import {convertToRub} from "../utils/convertToRub";
 import ImageGallery from 'react-image-gallery';
 import "./gallery.scss"
@@ -28,12 +27,6 @@ const DevicePage = () => {
         fetchOneDevice(Number(id)).then(data => setDevice(data))
     }, [])
 
-    // TODO рейтинг
-    // TODO отзывы
-    // TODO сортировку по цене
-    // TODO сброс сортировок
-    // TODO сортировка по наличию в магазине
-
     return (
 
         <Container className="mt-3">
@@ -43,16 +36,11 @@ const DevicePage = () => {
                         <Col md={4}>
                             {device.images
                                 ?
-                                <ImageGallery items={images} showPlayButton={false}/>
+                                <ImageGallery items={images} showPlayButton={false} showThumbnails={false}/>
                                 :
                                 <div style={{color: "crimson"}}>Картинку не удалось загрузить</div>
                             }
 
-                        </Col>
-                        <Col md={4}>
-                            <Row className="d-flex flex-column align-items-center">
-                                <Rating rating={device.rating}/>
-                            </Row>
                         </Col>
                         <Col md={4}>
                             <Card
@@ -70,7 +58,7 @@ const DevicePage = () => {
                     </Row>
 
                     {device.info.length
-                        ? <Row className="d-flex flex-column m-3">
+                        && <Row className="d-flex flex-column m-3">
                             <h1>Характеристики</h1>
                             {device.info.map((info, index) => {
                                 return <Row key={index} style={{padding: 10}}>
@@ -78,7 +66,6 @@ const DevicePage = () => {
                                 </Row>
                             })}
                         </Row>
-                        : <></>
                     }
 
                 </>

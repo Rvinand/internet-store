@@ -1,0 +1,11 @@
+.list_group_item{
+  border: none;
+
+  &:hover {
+    border-left: 2px solid #ffc107;
+  }
+}
+
+.list_group {
+  border-radius: 0px;
+}

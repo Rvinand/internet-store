@@ -6,9 +6,10 @@ import {Form} from "react-bootstrap";
 
 interface BrandCheckProps {
     brand: IBrand
+    isAllUncheck: boolean
 }
 
-const BrandCheck: FC<BrandCheckProps> = ({brand}) => {
+const BrandCheck: FC<BrandCheckProps> = ({brand, isAllUncheck}) => {
 
     const dispatch = useAppDispatch()
     const {setSelectedBrands} = deviceSlice.actions
@@ -34,7 +35,7 @@ const BrandCheck: FC<BrandCheckProps> = ({brand}) => {
             type={"checkbox"}
             name="brand"
             label={brand.name}
-            checked={isChecked}
+            checked={isChecked && !isAllUncheck}
             onChange={() => checkHandle(brand)}
         />
     );

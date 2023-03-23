@@ -19,8 +19,6 @@ const Saved = () => {
         }
     }, [])
 
-    // TODO сохранение сохранённых девайсов пользователя если он auth
-
     return (
         <Container className={"mt-3"}>
             {
@@ -36,7 +34,9 @@ const Saved = () => {
                         textAlign: "center",
                         fontSize: "1.5rem",
                         marginTop: "23rem"
-                    }}>Пока вы не сохроняли устройсва</div>
+                    }}>
+                        Пока вы не сохроняли устройсва
+                </div>
             }
 
         </Container>

@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import {useCookies} from "react-cookie";
 import {useAppDispatch, useAppSelector} from "../store/hooks";
 import {deviceSlice} from "../store/DeviceSlice";
@@ -47,7 +47,7 @@ const AddToSavedBtn:FC<AddToSavedBtnProps> = ({device}) => {
         <div>
             {
                 savedDevices.map(d => d.name).includes(device.name)
-                    ? <Button style={{width: "4rem", marginRight: "1rem"}} variant={"dark"}
+                    ? <Button style={{width: "2.5rem", marginRight: "0.5rem"}} variant={"danger"}
                               onClick={deleteFromSaved}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              className="bi bi-heart-fill" viewBox="0 0 16 16">
@@ -55,7 +55,7 @@ const AddToSavedBtn:FC<AddToSavedBtnProps> = ({device}) => {
                                   d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
                         </svg>
                     </Button>
-                    : <Button style={{width: "4rem", marginRight: "1rem"}} variant={"outline-dark"}
+                    : <Button style={{width: "2.5rem", marginRight: "0.5rem"}} variant={"outline-danger"}
                               onClick={addToSaved}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              className="bi bi-heart" viewBox="0 0 16 16">

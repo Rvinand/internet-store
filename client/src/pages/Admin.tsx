@@ -13,21 +13,21 @@ const Admin = () => {
     return (
         <Container className="d-flex flex-column">
             <Button
-                variant={"outline-dark"}
+                variant={"primary"}
                 className="mt-4 p-2"
                 onClick={() => setCategoryVisible(true)}
             >
                 Добавить категорию
             </Button>
             <Button
-                variant={"outline-dark"}
+                variant={"primary"}
                 className="mt-4 p-2"
                 onClick={() => setBrandVisible(true)}
             >
                 Добавить бренд
             </Button>
             <Button
-                variant={"outline-dark"}
+                variant={"primary"}
                 className="mt-4 p-2"
                 onClick={() => setDeviceVisible(true)}
             >

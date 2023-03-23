@@ -15,7 +15,12 @@ const Pages = () => {
     }
 
     return (
-        <Pagination style={{width: "5rem", position: "absolute", bottom: "5rem", marginLeft:"28rem", marginRight: "28rem"}}>
+        <Pagination
+            style={{
+                marginTop: "4rem",
+                marginLeft: "28rem",
+                marginRight: "28rem",
+            }}>
             {pages.map(page =>
                 <Pagination.Item
                     key={page}

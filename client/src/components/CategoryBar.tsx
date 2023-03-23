@@ -5,6 +5,7 @@ import {IDeviceCategory} from "../Types/IDeviceCategory";
 import {useNavigate} from "react-router-dom";
 import {deviceSlice} from "../store/DeviceSlice";
 import {Image} from "react-bootstrap";
+import "./CategoryBar.scss"
 
 const CategoryBar = () => {
     const device = useAppSelector(state => state.DeviceSlice)
@@ -20,10 +21,11 @@ const CategoryBar = () => {
     }
 
     return (
-        <ListGroup>
+        <ListGroup className={"list_group"}>
             {device.categories.map((category: IDeviceCategory) =>
                 <ListGroup.Item
-                    style={{cursor: 'pointer', border: "none"}}
+                    className={"list_group_item"}
+                    style={{cursor: 'pointer'}}
                     onClick={() => switchCategory(category)}
                     key={category.id}
                 >

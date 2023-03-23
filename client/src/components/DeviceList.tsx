@@ -9,7 +9,16 @@ const DeviceList = () => {
     return (
         <Col className="d-flex" style={{flexDirection: "column"}}>
             {device.map(device =>
-                    <DeviceItem key={device.id} device={device}/>
+                <div
+                    key={device.id}
+                    style={{
+                        backgroundColor: "white",
+                        borderRadius: "5px",
+                    }}
+                    className={"m-2"}
+                >
+                    <DeviceItem device={device}/>
+                </div>
             )}
         </Col>
     );

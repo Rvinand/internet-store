@@ -22,15 +22,15 @@ const NavBar = () => {
     }
 
     return (
-        <Navbar bg="dark" variant="dark">
+        <Navbar bg="warning" variant="dark">
             <Container>
                 <NavLink style={{color: 'white', textDecoration: "none", fontWeight: "700", fontSize: "1.5rem"}}
-                         to={SHOP_ROUTE}>DEVICE</NavLink>
+                         to={SHOP_ROUTE}>VEGA</NavLink>
                 {user.isAuth ?
                     <Nav className="ml-auto" style={{color: 'white'}}>
                         <Button
                             style={{display: "block", marginRight: "1rem"}}
-                            variant={"outline-light"}
+                            variant={"dark"}
                             onClick={() => navigate(SAVED_ROUTE)}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -41,7 +41,7 @@ const NavBar = () => {
                         </Button>
                         <Button
                             style={{display: "block", marginRight: "1rem"}}
-                            variant={"outline-light"}
+                            variant={"dark"}
                             onClick={() => navigate(BASKET_ROUTE)}
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -52,7 +52,7 @@ const NavBar = () => {
                         </Button>
                         <Button
                             style={{display: "block", width: "5rem", marginRight: "1rem"}}
-                            variant={"outline-light"}
+                            variant={"primary"}
                             onClick={() => navigate(ADMIN_ROUTE)}
                         >
                             Админ
@@ -60,7 +60,7 @@ const NavBar = () => {
 
                         <Button
                             style={{display: "block", width: "5rem"}}
-                            variant={"outline-light"}
+                            variant={"light"}
                             onClick={() => logOut()}
                         >
                             Выйти
