@@ -4,12 +4,21 @@
 
 ### download
 
+```shell
+git clone https://github.com/Rvinand/internet-store.git
+```
+
 client:
 ```shell
+cd client
 npm i
 ```
 
-same for server
+server:
+```shell
+cd server
+npm i
+```
 
 ### start
 
